@@ -16,7 +16,7 @@ export interface BookData{
   asterisk	:number,
   dagger:number,
   amazon_product_url	:string,
-  isbns: {isbn10:string,is1n13:string}[],
+  isbns: {isbn10:string,isbn13:string}[],
   book_details:BookDetail[],
   reviews:Review[],
 }

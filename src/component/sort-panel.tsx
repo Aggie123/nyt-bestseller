@@ -1,29 +1,31 @@
-import React, { useState } from "react";
+import React, { ChangeEventHandler, useState } from "react";
+
+export enum SortOptions{
+  RANK=1,
+  TITLE=2,
+  AUTHOR=3,
+  ISNN=4,
+}
 
 const options=[{
   name: 'Rank',
-  value:'1',
+  value:SortOptions.RANK,
 },{
   name: 'Tilte',
-  value:'2',
+  value:SortOptions.TITLE,
 },{
   name: 'Author',
-  value:'3',
+  value:SortOptions.AUTHOR,
 },{
   name: 'ISBN',
-  value:'4',
+  value:SortOptions.ISNN,
 }]
 
-export default function SortPanel(){
-  const [data,setData]=useState('');
-  const onChange=(e:React.ChangeEvent<HTMLSelectElement>)=>{
-    console.log(e);
-    setData(e.target.value);
-  }
+export default function SortPanel({onChange, value}:{onChange:ChangeEventHandler<HTMLSelectElement>, value:number}){
   return (
     <div className="sort-panel">
       <span>Sort by:</span>
-      <select onChange={onChange} value={data}>
+      <select onChange={onChange} value={value}>
         {options.map(item=><option value={item.value}>{item.name}</option>)}
       </select>
     </div>
