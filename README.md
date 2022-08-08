@@ -13,7 +13,7 @@ Support:
 2. image lazy loading
 3. adaptive layout
 
-TODO:
+More can be done:
 1. list lazy loading for long list
 2. capacity test
 3. unit test
