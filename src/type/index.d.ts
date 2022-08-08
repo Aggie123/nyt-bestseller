@@ -23,7 +23,6 @@ interface BookDetail{
   book_image:string,
   book_image_height: number,
   book_image_width: number,
-  ///
   title	:string,
   description: string,
   contributor: string,
@@ -32,8 +31,6 @@ interface BookDetail{
   price:number,
   age_group: string,
   publisher: string,
-  // primary_isbn13: string,
-  // primary_isbn10: string,
 }
 interface Review{
   book_review_link	:string,
@@ -61,6 +58,7 @@ export enum SortOptions{
 }
 
 /**
+ * lists接口相关-放弃
  * export interface ListResult{
   display_name:string,
   list_name:string,

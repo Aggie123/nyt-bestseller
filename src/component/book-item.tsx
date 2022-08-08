@@ -1,3 +1,6 @@
+/**
+ * @description: BookItem detail
+ */
 import { BookDetail } from "../type";
 import './book-item.css';
 import LazyImg from './lazy-img'

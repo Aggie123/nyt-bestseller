@@ -3,14 +3,15 @@ import axios from "axios";
 
 import {LOADINGSTATE,SortOptions, BookList, BookDetail} from '../type/index.d'
 
-const baseUrl ='https://api.nytimes.com/svc/books/v3';
-const apiKey='TCA6F3ERSCl405KagmGI7MIe8rn2bu2U'; // TODO store key safely
-// const lists='/lists.json?list=hardcover-fiction';
-const listsByDate='/lists/current/hardcover-fiction.json'
-
 const SUCCESSSTATUS=200;
-// const url=`${baseUrl}${lists}&api-key=${apiKey}`; // 这个返回没有书的图片，放弃
-const url=`${baseUrl}${listsByDate}?&api-key=${apiKey}`;
+
+const BASE_URL='https://api.nytimes.com/svc/books/v3';
+const API_KEY ='TCA6F3ERSCl405KagmGI7MIe8rn2bu2U'; // 这个暂时用明文，建议放在后端安全存储获取使用
+// const LISTS='/lists.json?list=hardcover-fiction';
+const LIST_BY_DATE='/lists/current/hardcover-fiction.json'
+// const url=`${BASE_URL =}${LISTS}&api-key=${API_KEY}`; // 这个返回没有书的图片，放弃
+const url=`${BASE_URL}${LIST_BY_DATE}?&api-key=${API_KEY}`;
+
 export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK, offset:number=0):{loading:LOADINGSTATE,data:BookList|null}{
   const [data, setData]=useState<BookList|null>(null);
   const [loading, setLoading] = useState<LOADINGSTATE>(LOADINGSTATE.INIT);

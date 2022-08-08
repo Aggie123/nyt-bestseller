@@ -1,3 +1,6 @@
+/**
+ * @description: Sort Panel
+ */
 import React, { ChangeEventHandler } from "react";
 import {SortOptions} from '../type/index.d';
 import './sort-panel.css';
