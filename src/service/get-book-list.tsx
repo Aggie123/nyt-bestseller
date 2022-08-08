@@ -18,8 +18,7 @@ export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK, o
   useEffect(() => {
     axios.get(`${url}&offset=${offset}`)
     .then((response) =>{
-      const {status, data} = response;
-      console.log('ddd',data)
+      const {status, data} = response||{};
       if(status!==SUCCESSSTATUS){
         setLoading(LOADINGSTATE.FAIL);
         setData(null);
