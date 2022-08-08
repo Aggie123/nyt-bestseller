@@ -1,7 +1,7 @@
 export interface BookList{
   status:string,
   copyright: string,
-  results: BookListResult[],
+  results: BookListResult,
   num_results:number,
   last_modified:string
 }

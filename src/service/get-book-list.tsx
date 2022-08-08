@@ -9,12 +9,11 @@ const apiKey='TCA6F3ERSCl405KagmGI7MIe8rn2bu2U'; // TODO store key safely
 const listsByDate='/lists/current/hardcover-fiction.json'
 
 const SUCCESSSTATUS=200;
-// const url1=`${baseUrl}${lists}&api-key=${apiKey}`;
+// const url=`${baseUrl}${lists}&api-key=${apiKey}`; // 这个返回没有书的图片，放弃
 const url=`${baseUrl}${listsByDate}?&api-key=${apiKey}`;
 export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK, offset:number=0):{loading:LOADINGSTATE,data:BookList|null}{
   const [data, setData]=useState<BookList|null>(null);
-  const [loading, setLoading] = useState<LOADINGSTATE>(LOADINGSTATE.INIT)
-  // TODO: loading error info
+  const [loading, setLoading] = useState<LOADINGSTATE>(LOADINGSTATE.INIT);
 
   useEffect(() => {
     axios.get(`${url}&offset=${offset}`)
@@ -31,12 +30,13 @@ export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK, o
       }
     })
     
-  },[sortValue])
+  },[sortValue,offset]) // offset的功能支持，但具体没有实现
   return {loading, data};
 }
 
+// 排序功能
 function sortBookList(data:BookList|null, sortValue:SortOptions):(BookList|null){
-  data?.results?.books?.sort((a:BookDetail,b:BookDetail):number=>{
+  data?.results?.books?.sort((a:BookDetail,b:BookDetail):number => {
     switch(sortValue){
       case SortOptions.RANK:
         return a.rank-b.rank;
@@ -46,6 +46,8 @@ function sortBookList(data:BookList|null, sortValue:SortOptions):(BookList|null)
         return a?.author.localeCompare(b?.author);
       case SortOptions.ISNN:
         return Number(a?.isbns?.[0]?.isbn10)-Number(b?.isbns?.[0]?.isbn10);
+      default:
+        return a.rank-b.rank;
     }
   });
   return data;
