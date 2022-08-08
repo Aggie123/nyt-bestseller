@@ -1,4 +1,4 @@
-import { ChangeEventHandler,  useState } from 'react';
+import { ChangeEventHandler,  MouseEventHandler,  useState } from 'react';
 
 import BookItem from '../component/book-item';
 import useGetBookList from '../service/get-book-list';
@@ -16,6 +16,10 @@ export default function BookList(){
     setSortValue(Number(e.target.value));
   }
 
+  const onClickMore:MouseEventHandler<HTMLButtonElement>=(e)=>{
+    console.log(e.target);
+  }
+
 
   if(loading!==LOADINGSTATE.SUCCESS){
     return (
@@ -25,13 +29,16 @@ export default function BookList(){
 
   return(
     <div className='list-container'>
-      <p>Paperback Notification BestSellers</p>
+      <h2 className="list-title">paperback Notification BestSellers</h2>
       <div className="list-wrapper">
         <SortPanel onChange={onChangeRank} value={sortValue}/>
         <div className="book-list">
           {
             data?.results?.map((item)=><BookItem data={item} key={`${item.book_details?.[0]?.primary_isbn13}`} />)
           }
+        </div>
+        <div className="more">
+          <button className="moreBtn" onClick={onClickMore}>SHOW MORE</button>
         </div>
       </div>
     </div>

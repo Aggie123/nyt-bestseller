@@ -1,4 +1,4 @@
-import { useEffect, useState, useMemo } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 
 import {LOADINGSTATE,SortOptions,BookData, BookList} from '../type/index.d'
@@ -13,7 +13,7 @@ export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK):{
   const [data, setData]=useState<BookList|null>(null);
   const [loading, setLoading] = useState<LOADINGSTATE>(LOADINGSTATE.INIT)
   // TODO: loading error info
-  console.log('sss',sortValue)
+
   useEffect(() => {
     axios.get(url)
     .then((response) =>{
@@ -42,8 +42,7 @@ function sortBookList(data:BookList|null, sortValue:SortOptions):(BookList|null)
       case SortOptions.AUTHOR:
         return a?.book_details?.[0].author.localeCompare(b?.book_details?.[0].author);
       case SortOptions.ISNN:
-        return a?.book_details?.[0].primary_isbn13.localeCompare(b?.book_details?.[0].primary_isbn13);
-        // return a?.book_details?.[0].primary_isbn13-b?.book_details?.[0].primary_isbn13);
+        return Number(a?.book_details?.[0].primary_isbn13)-Number(b?.book_details?.[0].primary_isbn13);
     }
   });
   return data;
