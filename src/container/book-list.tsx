@@ -2,7 +2,7 @@ import { ChangeEventHandler,  MouseEventHandler,  useState } from 'react';
 
 import BookItem from '../component/book-item';
 import useGetBookList from '../service/get-book-list';
-import {LOADINGSTATE, SortOptions} from '../type/index.d';
+import {BookDetail, LOADINGSTATE, SortOptions} from '../type/index.d';
 import './book-list.css';
 import SortPanel from '../component/sort-panel';
 
@@ -26,15 +26,15 @@ export default function BookList(){
     <div>{loading===LOADINGSTATE.INIT?'loading...':'Oops, something wrong, please try again...'}</div>
     );
   }
-
+  console.log(data)
   return(
     <div className='list-container'>
-      <h2 className="list-title">paperback Notification BestSellers</h2>
+      <h2 className="list-title">Paperback Notification BestSellers</h2>
       <div className="list-wrapper">
         <SortPanel onChange={onChangeRank} value={sortValue}/>
         <div className="book-list">
           {
-            data?.results?.map((item)=><BookItem data={item} key={`${item.book_details?.[0]?.primary_isbn13}`} />)
+            data?.results?.books?.map((item:BookDetail)=><BookItem data={item} key={`${item?.isbns?.[0]?.isbn10}`} />)
           }
         </div>
         <div className="more">
