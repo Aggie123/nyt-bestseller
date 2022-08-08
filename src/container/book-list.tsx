@@ -2,9 +2,9 @@ import { ChangeEventHandler, useState } from 'react';
 
 import BookItem from '../component/book-item';
 import useGetBookList from '../service/get-book-list';
+import SortPanel from '../component/sort-panel';
 import {BookDetail, LOADINGSTATE, SortOptions} from '../type/index.d';
 import './book-list.css';
-import SortPanel from '../component/sort-panel';
 
 
 export default function BookList(){
@@ -15,7 +15,7 @@ export default function BookList(){
     setSortValue(Number(e.target.value));
   }
 
-  // 实现了图片滚动懒加载
+  // 实现了图片滚动懒加载的方式加载更多
   // const onClickMore:MouseEventHandler<HTMLButtonElement>=(e)=>{
   //   console.log(e.target);
   // }
@@ -34,6 +34,7 @@ export default function BookList(){
             data?.results?.books?.map((item:BookDetail)=><BookItem data={item} key={`${item?.isbns?.[0]?.isbn10}`} />)
           }
         </div>
+        {/* 实现了图片滚动懒加载的方式加载更多 */}
         {/* <div className="more">
           <button className="moreBtn" onClick={onClickMore}>SHOW MORE</button>
         </div> */}
