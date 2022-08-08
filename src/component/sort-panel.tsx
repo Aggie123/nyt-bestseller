@@ -1,11 +1,5 @@
-import React, { ChangeEventHandler, useState } from "react";
-
-export enum SortOptions{
-  RANK=1,
-  TITLE=2,
-  AUTHOR=3,
-  ISNN=4,
-}
+import React, { ChangeEventHandler } from "react";
+import {SortOptions} from '../type/index.d';
 
 const options=[{
   name: 'Rank',

@@ -1,23 +1,21 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import axios from "axios";
 
-import {LOADINGSTATE,BookList} from '../type'
+import {LOADINGSTATE,SortOptions,BookData, BookList} from '../type/index.d'
 
 const baseUrl ='https://api.nytimes.com/svc/books/v3';
 const apiKey='TCA6F3ERSCl405KagmGI7MIe8rn2bu2U'; // TODO store key safely
-const allList='/lists/names.json';
 const lists='/lists.json?list=hardcover-fiction';
-// const subUrl='lists/current/paperback-nonfiction.json'
 
 const SUCCESSSTATUS=200;
-export default function useGetBookList():{loading:LOADINGSTATE,data:BookList|null}{
-  const [data, setData]=useState(null);
-  const [loading, setLoading] = useState(LOADINGSTATE.INIT)
+const url=`${baseUrl}${lists}&api-key=${apiKey}`;
+export default function useGetBookList(sortValue:SortOptions=SortOptions.RANK):{loading:LOADINGSTATE,data:BookList|null}{
+  const [data, setData]=useState<BookList|null>(null);
+  const [loading, setLoading] = useState<LOADINGSTATE>(LOADINGSTATE.INIT)
   // TODO: loading error info
-
+  console.log('sss',sortValue)
   useEffect(() => {
-    // axios.get(`${baseUrl}${allList}?&api-key=${apiKey}`)
-    axios.get(`${baseUrl}${lists}&api-key=${apiKey}`)
+    axios.get(url)
     .then((response) =>{
       const {status, data} = response;
       if(status!==SUCCESSSTATUS){
@@ -25,11 +23,28 @@ export default function useGetBookList():{loading:LOADINGSTATE,data:BookList|nul
         setData(null);
       }else{
         setLoading(LOADINGSTATE.SUCCESS);
-        setData(data);
+        const sortedData=sortBookList(data, sortValue);
+        setData(()=>sortedData);
       }
-      console.log('res',response,loading)
     })
     
-  },[])
+  },[sortValue])
   return {loading, data};
+}
+
+function sortBookList(data:BookList|null, sortValue:SortOptions):(BookList|null){
+  data?.results?.sort((a:BookData,b:BookData):number=>{
+    switch(sortValue){
+      case SortOptions.RANK:
+        return a.rank-b.rank;
+      case SortOptions.TITLE:
+        return a?.book_details?.[0].title.localeCompare(b?.book_details?.[0].title);
+      case SortOptions.AUTHOR:
+        return a?.book_details?.[0].author.localeCompare(b?.book_details?.[0].author);
+      case SortOptions.ISNN:
+        return a?.book_details?.[0].primary_isbn13.localeCompare(b?.book_details?.[0].primary_isbn13);
+        // return a?.book_details?.[0].primary_isbn13-b?.book_details?.[0].primary_isbn13);
+    }
+  });
+  return data;
 }
