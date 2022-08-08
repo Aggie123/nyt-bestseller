@@ -28,6 +28,14 @@
   margin-right: 2rem;
   flex-shrink: 0;
 }
+.book-img-default{
+  margin-left: 2rem;
+  margin-right: 2rem;
+  flex-shrink: 0;
+  background-color: bisque;
+  width: 11rem;
+  height:50/3rem;
+}
 .margin-top-2{
   margin-top: 2rem;
 }
